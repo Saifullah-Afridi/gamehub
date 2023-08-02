@@ -1,17 +1,21 @@
-import { Card, CardBody, Heading, Image } from "@chakra-ui/react";
+import { Card, CardBody, HStack, Heading, Image } from "@chakra-ui/react";
 import React from "react";
 import ParentPlatformListIcon from "./ParentPlatformListIcon";
+import CriticScore from "./CriticScore";
 
 const GameCard = (props) => {
   console.log(props.game);
   return (
-    <Card borderRadius={10} overflow={"hidden"}>
+    <Card borderRadius={10} overflow={"hidden"} width="300px">
       <Image src={props.game.background_image} />
       <CardBody>
         <Heading fontSize={"2xl"}>{props.game.name}</Heading>
-        <ParentPlatformListIcon
-          platforms={props.game.parent_platforms.map((p) => p.platform)}
-        ></ParentPlatformListIcon>
+        <HStack justifyContent="space-between">
+          <ParentPlatformListIcon
+            platforms={props.game.parent_platforms.map((p) => p.platform)}
+          />
+          <CriticScore score={props.game.metacritic} />
+        </HStack>
       </CardBody>
     </Card>
   );
