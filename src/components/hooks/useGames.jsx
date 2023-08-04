@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
 import { CanceledError } from "axios";
 
-const useGames = () => {
+const useGames = (requestConfig, dependency) => {
   const [games, setGames] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, SetIsLoading] = useState(false);
@@ -11,7 +11,7 @@ const useGames = () => {
     const controller = new AbortController();
     SetIsLoading(true);
     apiClient
-      .get("/games", { signal: controller.signal })
+      .get("/games", { signal: controller.signal, ...requestConfig })
       .then((res) => {
         setGames(res.data.results);
         SetIsLoading(false);
@@ -23,7 +23,7 @@ const useGames = () => {
       });
 
     return () => controller.abort();
-  }, []);
+  }, [dependency]);
   return { games, error, isLoading };
 };
 

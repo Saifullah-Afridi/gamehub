@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   HStack,
@@ -13,28 +14,34 @@ import {
 } from "@chakra-ui/react";
 import useGenres from "./hooks/useGenres";
 
-const GenreList = () => {
+const GenreList = ({ onSelectedGenre }) => {
   const { genres, error, isLoading } = useGenres();
-  if (isLoading) return <Spinner />;
-  // if (isLoading)
-  //   return (
-  //     <Card height="100%">
-  //       <CardBody>
-  //         <SkeletonText
-  //           noOfLines={10}
-  //           skeletonHeight={3}
-  //           spacing={10}
-  //         ></SkeletonText>
-  //       </CardBody>
-  //     </Card>
-  //   );
+  // if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Card height="100%">
+        <CardBody>
+          <SkeletonText
+            noOfLines={10}
+            skeletonHeight={3}
+            spacing={10}
+          ></SkeletonText>
+        </CardBody>
+      </Card>
+    );
   return (
     <List>
       {genres.map((gen) => (
         <ListItem key={gen.id} paddingY="10px">
           <HStack>
             <Image boxSize="32px" src={gen.image_background} />
-            <Text fontSize="lg">{gen.name}</Text>
+            <Button
+              fontSize="lg"
+              variant="link"
+              onClick={() => onSelectedGenre(gen)}
+            >
+              {gen.name}
+            </Button>
           </HStack>
         </ListItem>
       ))}
