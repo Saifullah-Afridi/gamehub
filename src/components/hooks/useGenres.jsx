@@ -1,5 +1,9 @@
+import { CanceledError } from "axios";
+import { useState, useEffect } from "react";
+import apiClient from "../services/apiClient";
+
 const useGenres = () => {
-  const [games, setGames] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, SetIsLoading] = useState(false);
 
@@ -7,9 +11,9 @@ const useGenres = () => {
     const controller = new AbortController();
     SetIsLoading(true);
     apiClient
-      .get("/games", { signal: controller.signal })
+      .get("/genres", { signal: controller.signal })
       .then((res) => {
-        setGames(res.data.results);
+        setGenres(res.data.results);
         SetIsLoading(false);
       })
       .catch((err) => {
@@ -20,7 +24,7 @@ const useGenres = () => {
 
     return () => controller.abort();
   }, []);
-  return { games, error, isLoading };
+  return { genres, error, isLoading };
 };
 
 export default useGenres;
