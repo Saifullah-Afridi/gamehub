@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import useGenres from "./hooks/useGenres";
 
-const GenreList = ({ onSelectedGenre }) => {
+const GenreList = ({ SelectedGenre, onSelectedGenre }) => {
   const { genres, error, isLoading } = useGenres();
   // if (isLoading) return <Spinner />;
   if (isLoading)
@@ -36,6 +36,7 @@ const GenreList = ({ onSelectedGenre }) => {
           <HStack>
             <Image boxSize="32px" src={gen.image_background} />
             <Button
+              fontWeight={gen.id === SelectedGenre?.id ? "bold" : "normal"}
               fontSize="lg"
               variant="link"
               onClick={() => onSelectedGenre(gen)}
