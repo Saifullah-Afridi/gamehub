@@ -1,9 +1,9 @@
 import { CanceledError } from "axios";
-import { useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
+import { useEffect, useState } from "react";
 
-const useGenres = (requestConfig, depend) => {
-  const [genres, setGenres] = useState([]);
+const usePlatform = () => {
+  const [platform, setPlatform] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, SetIsLoading] = useState(false);
 
@@ -11,9 +11,9 @@ const useGenres = (requestConfig, depend) => {
     const controller = new AbortController();
     SetIsLoading(true);
     apiClient
-      .get("/genres", { signal: controller.signal, ...requestConfig })
+      .get("/platforms/lists/parents", { signal: controller.signal })
       .then((res) => {
-        setGenres(res.data.results);
+        setPlatform(res.data.results);
         SetIsLoading(false);
       })
       .catch((err) => {
@@ -23,8 +23,7 @@ const useGenres = (requestConfig, depend) => {
       });
 
     return () => controller.abort();
-  }, [depend]);
-  return { genres, error, isLoading };
+  }, []);
+  return { platform, error, isLoading };
 };
-
-export default useGenres;
+export default usePlatform;

@@ -6,7 +6,7 @@ import CriticScore from "./CriticScore";
 const GameCard = (props) => {
   console.log(props.game);
   return (
-    <Card borderRadius={10} overflow={"hidden"} width="100%">
+    <Card borderRadius={10} overflow={"hidden"} width="100%" boxShadow="2xl">
       <Image src={props.game.background_image} />
       <CardBody>
         <Heading fontSize={"2xl"}>{props.game.name}</Heading>
